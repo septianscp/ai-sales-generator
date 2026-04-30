@@ -14,7 +14,7 @@ export async function GET() {
     }
 
     const user = await prisma.user.findUnique({
-      where: { id: (session.user as any).id },
+      where: { id: (session?.user as any).id },
       select: {
         id: true,
         companyName: true,
@@ -60,7 +60,7 @@ export async function PATCH(req: Request) {
     const { companyName, email } = result.data;
 
     // If email is being changed, check it's not already taken
-    if (email && email !== session.user.email) {
+    if (email && email !== session?.user.email) {
       const existingUser = await prisma.user.findUnique({
         where: { email },
       });
@@ -74,7 +74,7 @@ export async function PATCH(req: Request) {
     }
 
     const updatedUser = await prisma.user.update({
-      where: { id: (session.user as any).id },
+      where: { id: (session?.user as any).id },
       data: {
         ...(companyName && { companyName }),
         ...(email && { email }),
