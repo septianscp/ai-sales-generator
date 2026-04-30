@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { JsonValue } from "@prisma/client/runtime/client";
 
 export default async function myPages() {
     const session = await getServerSession(authOptions);
@@ -43,7 +44,16 @@ export default async function myPages() {
 
                 {pages.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {pages.map((page) => (
+                        {pages.map((page: {
+                            id: string;
+                            createdAt: Date;
+                            updatedAt: Date;
+                            userId: string;
+                            productName: string;
+                            config: JsonValue;
+                            generatedContent: JsonValue | null;
+                            templateId: number;
+                        }) => (
                             <CardPage key={page.id} page={page} />
                         ))}
                     </div>
