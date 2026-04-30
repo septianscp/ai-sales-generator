@@ -8,37 +8,37 @@ import { timeAgo } from "@/lib/utils";
 import { Stats } from "@/types/page-data";
 import { Button } from "@/components/ui/button";
 
+const StatSkeleton = () => (
+  <div className="h-8 w-16 bg-zinc-100 dark:bg-zinc-800 rounded animate-pulse" />
+);
+
 export default function Home() {
+
   const { data: session } = useSession();
   const userName = session?.user?.name || "Guest";
   const [stats, setStats] = useState<Stats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  const fetchStats = async () => {
-    try {
-      const res = await fetch("/api/stats");
-      if (res.ok) {
-        const data = await res.json();
-        setStats(data);
-      } else {
-        setIsError(true);
-      }
-    } catch {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch("/api/stats");
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        } else {
+          setIsError(true);
+        }
+      } catch {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
     fetchStats();
   }, []);
-
-  const StatSkeleton = () => (
-    <div className="h-8 w-16 bg-zinc-100 dark:bg-zinc-800 rounded animate-pulse" />
-  );
 
   return (
     <DashboardLayout>
@@ -59,7 +59,7 @@ export default function Home() {
               <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm">
                 <div className="flex items-center justify-center h-full">
                   <p className="text-sm text-zinc-500 dark:text-zinc-400">Error fetching stats</p>
-                  <Button variant="outline" onClick={() => fetchStats()}>Retry</Button>
+                  <Button variant="outline" onClick={() => window.location.reload()}>Retry</Button>
                 </div>
               </div>
               :

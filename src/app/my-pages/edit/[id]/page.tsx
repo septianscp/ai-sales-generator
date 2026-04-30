@@ -58,7 +58,7 @@ export default function EditPage() {
             }
         };
         fetchPage();
-    }, [id]);
+    }, [id, router]);
 
     const handleGenerate = async () => {
         if (!value.product) {

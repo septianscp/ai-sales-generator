@@ -12,7 +12,7 @@ export default function EmptyPages() {
                 No pages created yet
             </h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mt-2 mb-6">
-                You haven't built any AI landing pages yet. Start by creating your first conversion-optimized page.
+                You haven&apos;t built any AI landing pages yet. Start by creating your first conversion-optimized page.
             </p>
             <Link href="/my-pages/add">
                 <Button>Create Your First Page</Button>
